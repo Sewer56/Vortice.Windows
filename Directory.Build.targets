@@ -5,10 +5,4 @@
     <PublishTrimmed>true</PublishTrimmed>
   </PropertyGroup>
 
-  <!-- Settings that are only set for libraries -->
-  <PropertyGroup Condition="'$(OutputType)' == 'Library'">
-    <EnableTrimAnalyzer>false</EnableTrimAnalyzer>
-    <IsTrimmable>false</IsTrimmable>
-  </PropertyGroup>
-
 </Project>

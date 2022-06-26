@@ -22,6 +22,9 @@
 
 using System;
 using System.Collections.Generic;
+#if NET6_0_OR_GREATER
+using System.Diagnostics.CodeAnalysis;
+#endif
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -432,13 +435,22 @@ namespace Vortice.DirectInput
             WriteEffectToFile(fileName, effects.Length, effects, (int)(includeNonstandardEffects ? EffectFileFlags.IncludeNonStandard : 0));
         }
 
-        public Result SetDataFormat<TRaw>() where TRaw : unmanaged
+        public Result SetDataFormat<
+#if NET6_0_OR_GREATER
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields | DynamicallyAccessedMemberTypes.NonPublicFields)]
+#endif
+        TRaw>() where TRaw : unmanaged
         {
             var dataFormat = GetDataFormat<TRaw>();
             return SetDataFormat(dataFormat);
         }
 
-        private unsafe DataFormat GetDataFormat<TRaw>() where TRaw : unmanaged
+
+        private unsafe DataFormat GetDataFormat<
+#if NET6_0_OR_GREATER
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields | DynamicallyAccessedMemberTypes.NonPublicFields)]
+#endif
+            TRaw>() where TRaw : unmanaged
         {
             if (_dataFormat == null)
             {

@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <IsTrimmable>true</IsTrimmable>
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimmerDefaultAction>link</TrimmerDefaultAction>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Vortice.DirectInput\Vortice.DirectInput.csproj" />
+    <ProjectReference Include="..\..\Vortice.XInput\Vortice.XInput.csproj" />
+  </ItemGroup>
+
+  <!-- Test all possible code paths from our libraries. -->
+  <ItemGroup>
+    <TrimmerRootAssembly Include="Vortice.DirectInput" />
+    <TrimmerRootAssembly Include="Vortice.XInput" />
+  </ItemGroup>
+
+</Project>
