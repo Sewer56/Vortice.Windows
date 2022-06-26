@@ -30,7 +30,7 @@ public partial struct Message
         Severity = @ref.Severity;
         Id = @ref.Id;
         Description = (@ref.pDescription == null) ? null : new string(@ref.pDescription, 0, (int)@ref.DescriptionByteLength);
-        DescriptionByteLength = @ref.DescriptionByteLength;
+        DescriptionByteLength = (IntPtr)@ref.DescriptionByteLength;
     }
     #endregion Marshal
 }
