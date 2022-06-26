@@ -5,8 +5,11 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <IsPackable>false</IsPackable>
     <RootNamespace>AdvancedTextRenderingApp</RootNamespace>
-    <PublishTrimmed>false</PublishTrimmed>
-    <IsTrimmable>false</IsTrimmable>
+
+    <IsTrimmable>true</IsTrimmable>
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimmerDefaultAction>link</TrimmerDefaultAction>
+    <TrimmerSingleWarn>false</TrimmerSingleWarn>
 
     <!-- In .NET 6, built-in COM interop is disabled, we need to re-enable it. -->
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>

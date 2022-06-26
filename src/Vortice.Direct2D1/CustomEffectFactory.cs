@@ -1,6 +1,9 @@
 // Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+#if NET5_0_OR_GREATER
+using System.Diagnostics.CodeAnalysis;
+#endif
 using System.Reflection;
 using System.Numerics;
 using Vortice.Mathematics;
@@ -11,12 +14,19 @@ internal class CustomEffectFactory
 {
     public FunctionCallback Callback { protected set; get; }
 
+#if NET5_0_OR_GREATER
+    [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties)]
+#endif
     private readonly Type _effectType;
     private Func<ID2D1EffectImpl> _createID2D1EffectImplFunc;
     private readonly CreateCustomEffectDelegate _createEffect;
     private readonly PropertyNativeBase[] _propertyNatives;
 
-    public CustomEffectFactory(Type effectType, Func<ID2D1EffectImpl> createID2D1EffectImplFunc)
+    public CustomEffectFactory(
+#if NET5_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties)]
+#endif
+        Type effectType, Func<ID2D1EffectImpl> createID2D1EffectImplFunc)
     {
         _effectType = effectType;
         _createID2D1EffectImplFunc = createID2D1EffectImplFunc;
@@ -125,7 +135,11 @@ internal class CustomEffectFactory
         }
     }
 
-    private class PropertyNative<U> : PropertyNativeBase where U : unmanaged
+    private class PropertyNative<
+#if NET5_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)]
+#endif
+        U> : PropertyNativeBase where U : unmanaged
     {
         private PropertyNative(PropertyInfo propertyInfo, PropertyType propertyType) : base(propertyInfo, propertyType)
         {

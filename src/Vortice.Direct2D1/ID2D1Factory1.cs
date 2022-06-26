@@ -1,6 +1,7 @@
 // Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
 using Vortice.DirectWrite;
 
 namespace Vortice.Direct2D1;
@@ -48,7 +49,11 @@ public partial class ID2D1Factory1
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="effectFactory"></param>
-    public void RegisterEffect<T>(Func<T> effectFactory) where T : CustomEffectBase
+    public void RegisterEffect<
+#if NET5_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties)]
+#endif
+    T>(Func<T> effectFactory) where T : CustomEffectBase
     {
         Guid effectId = typeof(T).GUID;
         RegisterEffect<T>(effectFactory, effectId);
@@ -60,7 +65,11 @@ public partial class ID2D1Factory1
     /// <typeparam name="T"></typeparam>
     /// <param name="effectFactory"></param>
     /// <param name="effectId"></param>
-    public void RegisterEffect<T>(Func<T> effectFactory, Guid effectId) where T : CustomEffectBase
+    public void RegisterEffect<
+#if NET5_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties)]
+#endif
+    T>(Func<T> effectFactory, Guid effectId) where T : CustomEffectBase
     {
         CustomEffectFactory factory;
         lock (_customEffectFactories)
@@ -78,7 +87,11 @@ public partial class ID2D1Factory1
     /// Register a <see cref="CustomEffectBase"/>.
     /// </summary>
     /// <typeparam name="T">Type of </typeparam>
-    public void RegisterEffect<T>() where T : CustomEffectBase, new()
+    public void RegisterEffect<
+#if NET5_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties)]
+#endif
+    T>() where T : CustomEffectBase, new()
     {
         RegisterEffect<T>(typeof(T).GUID);
     }
@@ -88,7 +101,11 @@ public partial class ID2D1Factory1
     /// </summary>
     /// <typeparam name="T">Type of </typeparam>
     /// <param name="effectId"></param>
-    public void RegisterEffect<T>(Guid effectId) where T : CustomEffectBase, new()
+    public void RegisterEffect<
+#if NET5_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties)]
+#endif
+    T>(Guid effectId) where T : CustomEffectBase, new()
     {
         lock (_customEffectFactories)
         {

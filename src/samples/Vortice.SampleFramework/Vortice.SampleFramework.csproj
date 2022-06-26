@@ -6,6 +6,8 @@
     <UseWindowsForms>true</UseWindowsForms>
     <RootNamespace>Vortice</RootNamespace>
     <IsPackable>false</IsPackable>
+
+    <IsTrimmable>true</IsTrimmable>
   </PropertyGroup>
 
   <ItemGroup>
