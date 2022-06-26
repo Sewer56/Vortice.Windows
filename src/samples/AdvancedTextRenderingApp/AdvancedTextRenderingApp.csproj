@@ -7,6 +7,9 @@
     <RootNamespace>AdvancedTextRenderingApp</RootNamespace>
     <PublishTrimmed>false</PublishTrimmed>
     <IsTrimmable>false</IsTrimmable>
+
+    <!-- In .NET 6, built-in COM interop is disabled, we need to re-enable it. -->
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
   </PropertyGroup>
   
   <ItemGroup>
