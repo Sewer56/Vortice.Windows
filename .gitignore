@@ -1,5 +1,8 @@
 syntax: glob
 
+#SharpGen Things
+RestoredPackages/*
+
 #NuGet things
 project.lock.json
 
