@@ -5,6 +5,11 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <RootNamespace>EnumerateDevices</RootNamespace>
     <IsPackable>false</IsPackable>
+
+    <IsTrimmable>true</IsTrimmable>
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimmerDefaultAction>link</TrimmerDefaultAction>
+    <TrimmerSingleWarn>false</TrimmerSingleWarn>
   </PropertyGroup>
 
   <ItemGroup>

@@ -6,6 +6,11 @@
     <RootNamespace>HelloDirectInput</RootNamespace>
     <IsPackable>false</IsPackable>
     <PublishTrimmed>true</PublishTrimmed>
+
+    <IsTrimmable>true</IsTrimmable>
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimmerDefaultAction>link</TrimmerDefaultAction>
+    <TrimmerSingleWarn>false</TrimmerSingleWarn>
   </PropertyGroup>
   
   <ItemGroup>
