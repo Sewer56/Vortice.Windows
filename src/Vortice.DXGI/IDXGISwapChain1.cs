@@ -1,6 +1,7 @@
 // Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
 using Vortice.Mathematics;
 
 namespace Vortice.DXGI;
@@ -26,7 +27,11 @@ public partial class IDXGISwapChain1
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public T GetCoreWindow<T>() where T : ComObject
+    public T GetCoreWindow<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>() where T : ComObject
     {
         GetCoreWindow(typeof(T).GUID, out IntPtr nativePtr).CheckError();
         return MarshallingHelpers.FromPointer<T>(nativePtr);
@@ -38,7 +43,11 @@ public partial class IDXGISwapChain1
     /// <typeparam name="T"></typeparam>
     /// <param name="coreWindow"></param>
     /// <returns></returns>
-    public Result GetCoreWindow<T>(out T? coreWindow) where T : ComObject
+    public Result GetCoreWindow<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(out T? coreWindow) where T : ComObject
     {
         Result result = GetCoreWindow(typeof(T).GUID, out IntPtr nativePtr);
         if (result.Failure)

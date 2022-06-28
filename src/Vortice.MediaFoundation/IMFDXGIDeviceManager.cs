@@ -1,6 +1,7 @@
 ﻿// Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
 using SharpGen.Runtime;
 
 namespace Vortice.MediaFoundation;
@@ -11,13 +12,21 @@ public partial class IMFDXGIDeviceManager
 
     public Result ResetDevice(ComObject direct3D11Device) => ResetDevice(direct3D11Device, ResetToken);
 
-    public T LockDevice<T>(IntPtr deviceHandle, bool block) where T : ComObject
+    public T LockDevice<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(IntPtr deviceHandle, bool block) where T : ComObject
     {
         LockDevice(deviceHandle, typeof(T).GUID, out IntPtr unkDevice, block).CheckError();
         return MarshallingHelpers.FromPointer<T>(unkDevice)!;
     }
 
-    public Result LockDevice<T>(IntPtr deviceHandle, bool block, out T? device) where T : ComObject
+    public Result LockDevice<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(IntPtr deviceHandle, bool block, out T? device) where T : ComObject
     {
         Result result = LockDevice(deviceHandle, typeof(T).GUID, out IntPtr unkDevice, block);
         if (result.Failure)
@@ -33,13 +42,21 @@ public partial class IMFDXGIDeviceManager
 
     public Result UnlockDevice(IntPtr hDevice) => UnlockDevice(hDevice, false);
 
-    public T GetVideoService<T>(IntPtr deviceHandle) where T : ComObject
+    public T GetVideoService<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(IntPtr deviceHandle) where T : ComObject
     {
         GetVideoService(deviceHandle, typeof(T).GUID, out IntPtr nativePtr).CheckError();
         return MarshallingHelpers.FromPointer<T>(nativePtr)!;
     }
 
-    public Result GetVideoService<T>(IntPtr deviceHandle, out T? service) where T : ComObject
+    public Result GetVideoService<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(IntPtr deviceHandle, out T? service) where T : ComObject
     {
         Result result = GetVideoService(deviceHandle, typeof(T).GUID, out IntPtr nativePtr);
         if (result.Failure)

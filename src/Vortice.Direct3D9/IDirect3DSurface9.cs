@@ -1,6 +1,8 @@
 // Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Vortice.Direct3D9;
 
 public unsafe partial class IDirect3DSurface9
@@ -11,13 +13,21 @@ public unsafe partial class IDirect3DSurface9
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns>The parent container texture.</returns>
-    public T GetContainer<T>() where T : ComObject
+    public T GetContainer<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>() where T : ComObject
     {
         GetContainer(typeof(T).GUID, out IntPtr containerPtr).CheckError();
         return MarshallingHelpers.FromPointer<T>(containerPtr);
     }
 
-    public Result GetContainer<T>(out T? container) where T : ComObject
+    public Result GetContainer<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(out T? container) where T : ComObject
     {
         Result result = GetContainer(typeof(T).GUID, out IntPtr containerPtr);
         if (result.Failure)

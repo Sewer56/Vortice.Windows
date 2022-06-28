@@ -2,6 +2,8 @@
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 // Implementation based on https://github.com/tgjones/DotNetDxc
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Vortice.Dxc;
 
 public partial class IDxcCompiler3
@@ -12,7 +14,11 @@ public partial class IDxcCompiler3
         return result!;
     }
 
-    public unsafe Result Compile<T>(string source, string[] arguments, IDxcIncludeHandler includeHandler, out T? result) where T : ComObject
+    public unsafe Result Compile<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(string source, string[] arguments, IDxcIncludeHandler includeHandler, out T? result) where T : ComObject
     {
         IntPtr shaderSourcePtr = Marshal.StringToHGlobalAnsi(source);
         IntPtr* argumentsPtr = (IntPtr*)0;
@@ -57,13 +63,21 @@ public partial class IDxcCompiler3
         }
     }
 
-    public T Disassemble<T>(in DxcBuffer buffer) where T : IDxcResult
+    public T Disassemble<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(in DxcBuffer buffer) where T : IDxcResult
     {
         Disassemble(buffer, out T? result).CheckError();
         return result!;
     }
 
-    public unsafe Result Disassemble<T>(DxcBuffer buffer, out T? result) where T : IDxcResult
+    public unsafe Result Disassemble<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(DxcBuffer buffer, out T? result) where T : IDxcResult
     {
         Result hr = Disassemble(ref buffer, typeof(T).GUID, out IntPtr nativePtr);
         if (hr.Failure)
@@ -76,13 +90,21 @@ public partial class IDxcCompiler3
         return hr;
     }
 
-    public T Disassemble<T>(string source) where T : IDxcResult
+    public T Disassemble<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(string source) where T : IDxcResult
     {
         Disassemble(source, out T? result).CheckError();
         return result!;
     }
 
-    public unsafe Result Disassemble<T>(string source, out T? result) where T : IDxcResult
+    public unsafe Result Disassemble<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(string source, out T? result) where T : IDxcResult
     {
         IntPtr shaderSourcePtr = Marshal.StringToHGlobalAnsi(source);
 

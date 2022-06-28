@@ -1,6 +1,8 @@
 ﻿// Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Vortice.Direct2D1;
 
 public unsafe partial class ID2D1Properties
@@ -202,7 +204,11 @@ public unsafe partial class ID2D1Properties
         return value;
     }
 
-    public unsafe T? GetIUnknownValue<T>(int index) where T : ComObject
+    public unsafe T? GetIUnknownValue<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(int index) where T : ComObject
     {
         IntPtr value = default;
         GetValue(index, PropertyType.IUnknown, &value, sizeof(IntPtr));

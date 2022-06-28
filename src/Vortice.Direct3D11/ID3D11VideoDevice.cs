@@ -1,6 +1,7 @@
 ﻿// Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
 using Vortice.DXGI;
 
 namespace Vortice.Direct3D11;
@@ -60,7 +61,11 @@ public partial class ID3D11VideoDevice
         return CreateVideoProcessorEnumerator(ref description, out enumerator);
     }
 
-    public T CreateVideoProcessorEnumerator<T>(VideoProcessorContentDescription description) where T : ID3D11VideoProcessorEnumerator
+    public T CreateVideoProcessorEnumerator<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(VideoProcessorContentDescription description) where T : ID3D11VideoProcessorEnumerator
     {
         using ID3D11VideoProcessorEnumerator enumerator = CreateVideoProcessorEnumerator(description);
         return enumerator.QueryInterface<T>();

@@ -1,6 +1,7 @@
 ﻿// Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
 using Vortice.Direct3D;
 
 namespace Vortice.D3DCompiler;
@@ -727,7 +728,11 @@ public unsafe static partial class Compiler
         return blob;
     }
 
-    public static T Reflect<T>(Span<byte> shaderBytecode) where T : ComObject
+    public static T Reflect<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+        T>(Span<byte> shaderBytecode) where T : ComObject
     {
         fixed (byte* shaderBytecodePtr = shaderBytecode)
         {
@@ -736,7 +741,11 @@ public unsafe static partial class Compiler
         }
     }
 
-    public static Result Reflect<T>(Span<byte> shaderBytecode, out T? reflection) where T : ComObject
+    public static Result Reflect<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+        T>(Span<byte> shaderBytecode, out T? reflection) where T : ComObject
     {
         fixed (byte* shaderBytecodePtr = shaderBytecode)
         {
@@ -752,7 +761,11 @@ public unsafe static partial class Compiler
         }
     }
 
-    public static T Reflect<T>(byte[] shaderBytecode) where T : ComObject
+    public static T Reflect<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(byte[] shaderBytecode) where T : ComObject
     {
         fixed (byte* shaderBytecodePtr = shaderBytecode)
         {
@@ -761,7 +774,11 @@ public unsafe static partial class Compiler
         }
     }
 
-    public static Result Reflect<T>(byte[] shaderBytecode, out T? reflection) where T : ComObject
+    public static Result Reflect<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(byte[] shaderBytecode, out T? reflection) where T : ComObject
     {
         fixed (byte* shaderBytecodePtr = shaderBytecode)
         {

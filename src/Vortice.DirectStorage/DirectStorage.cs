@@ -1,6 +1,8 @@
 // Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Vortice.DirectStorage;
 
 public static unsafe partial class DirectStorage
@@ -107,7 +109,11 @@ public static unsafe partial class DirectStorage
     /// </summary>
     /// <param name="factory">Specifies the DStorage factory interface, such as <see cref="IDStorageFactory"/>.</param>
     /// <returns>Return the <see cref="Result"/>.</returns>
-    public static Result DStorageGetFactory<T>(out T? factory) where T : ComObject
+    public static Result DStorageGetFactory<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+        T>(out T? factory) where T : ComObject
     {
         Result result = DStorageGetFactory(typeof(T).GUID, out IntPtr nativePtr);
         if (result.Success)
@@ -125,7 +131,11 @@ public static unsafe partial class DirectStorage
     /// open files for DStorage access, and other global operations.
     /// </summary>
     /// <returns>Return the DStorage factory interface, such as <see cref="IDStorageFactory"/>..</returns>
-    public static T DStorageGetFactory<T>() where T : ComObject
+    public static T DStorageGetFactory<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>() where T : ComObject
     {
         DStorageGetFactory(typeof(T).GUID, out IntPtr nativePtr).CheckError();
         return MarshallingHelpers.FromPointer<T>(nativePtr);

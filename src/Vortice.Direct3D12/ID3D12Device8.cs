@@ -1,11 +1,17 @@
 ﻿// Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Vortice.Direct3D12;
 
 public partial class ID3D12Device8
 {
-    public T CreateCommittedResource2<T>(
+    public T CreateCommittedResource2<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(
         HeapProperties heapProperties,
         HeapFlags heapFlags,
         ResourceDescription1 description,
@@ -24,7 +30,11 @@ public partial class ID3D12Device8
         return MarshallingHelpers.FromPointer<T>(nativePtr);
     }
 
-    public T CreateCommittedResource2<T>(
+    public T CreateCommittedResource2<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(
         HeapProperties heapProperties,
         HeapFlags heapFlags,
         ResourceDescription1 description,
@@ -44,7 +54,11 @@ public partial class ID3D12Device8
         return MarshallingHelpers.FromPointer<T>(nativePtr);
     }
 
-    public T? CreatePlacedResource1<T>(ID3D12Heap heap, ulong heapOffset, ResourceDescription1 description, ResourceStates initialState, ClearValue? optimizedClearValue = null) where T : ID3D12Resource
+    public T? CreatePlacedResource1<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(ID3D12Heap heap, ulong heapOffset, ResourceDescription1 description, ResourceStates initialState, ClearValue? optimizedClearValue = null) where T : ID3D12Resource
     {
         Result result = CreatePlacedResource1(
             heap,
@@ -62,7 +76,11 @@ public partial class ID3D12Device8
         return default;
     }
 
-    public Result CreatePlacedResource1<T>(
+    public Result CreatePlacedResource1<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(
         ID3D12Heap heap,
         ulong heapOffset,
         ResourceDescription1 description,
@@ -87,7 +105,11 @@ public partial class ID3D12Device8
         return result;
     }
 
-    public Result CreatePlacedResource1<T>(
+    public Result CreatePlacedResource1<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(
         ID3D12Heap heap,
         ulong heapOffset,
         ResourceDescription1 description,

@@ -1,6 +1,7 @@
 ﻿// Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
 using Vortice.Direct3D;
 using Vortice.DXGI;
 
@@ -150,12 +151,20 @@ public static unsafe partial class D3D12
         }
     }
 
-    public static Result D3D12CreateDevice<T>(IDXGIAdapter? adapter, out T? device) where T : ID3D12Device
+    public static Result D3D12CreateDevice<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(IDXGIAdapter? adapter, out T? device) where T : ID3D12Device
     {
         return D3D12CreateDevice(adapter, FeatureLevel.Level_11_0, out device);
     }
 
-    public static Result D3D12CreateDevice<T>(IDXGIAdapter? adapter, FeatureLevel minFeatureLevel, out T? device) where T : ID3D12Device
+    public static Result D3D12CreateDevice<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+        T>(IDXGIAdapter? adapter, FeatureLevel minFeatureLevel, out T? device) where T : ID3D12Device
     {
         Result result = D3D12CreateDevice(
             adapter != null ? adapter.NativePointer : IntPtr.Zero,
@@ -173,7 +182,11 @@ public static unsafe partial class D3D12
         return result;
     }
 
-    public static T D3D12CreateDevice<T>(IDXGIAdapter? adapter, FeatureLevel minFeatureLevel) where T : ID3D12Device
+    public static T D3D12CreateDevice<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(IDXGIAdapter? adapter, FeatureLevel minFeatureLevel) where T : ID3D12Device
     {
         D3D12CreateDevice(
             adapter != null ? adapter.NativePointer : IntPtr.Zero,
@@ -184,12 +197,20 @@ public static unsafe partial class D3D12
         return MarshallingHelpers.FromPointer<T>(nativePtr);
     }
 
-    public static Result D3D12CreateDevice<T>(IntPtr adapterPtr, out T? device) where T : ID3D12Device
+    public static Result D3D12CreateDevice<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(IntPtr adapterPtr, out T? device) where T : ID3D12Device
     {
         return D3D12CreateDevice(adapterPtr, FeatureLevel.Level_11_0, out device);
     }
 
-    public static Result D3D12CreateDevice<T>(IntPtr adapterPtr, FeatureLevel minFeatureLevel, out T? device) where T : ID3D12Device
+    public static Result D3D12CreateDevice<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(IntPtr adapterPtr, FeatureLevel minFeatureLevel, out T? device) where T : ID3D12Device
     {
         Result result = D3D12CreateDevice(adapterPtr, minFeatureLevel, typeof(T).GUID, out IntPtr nativePtr);
         if (result.Failure)
@@ -202,7 +223,11 @@ public static unsafe partial class D3D12
         return result;
     }
 
-    public static T D3D12CreateDevice<T>(IntPtr adapterPtr, FeatureLevel minFeatureLevel) where T : ID3D12Device
+    public static T D3D12CreateDevice<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(IntPtr adapterPtr, FeatureLevel minFeatureLevel) where T : ID3D12Device
     {
         D3D12CreateDevice(adapterPtr, minFeatureLevel, typeof(T).GUID, out IntPtr nativePtr).CheckError();
         return MarshallingHelpers.FromPointer<T>(nativePtr);
@@ -215,7 +240,11 @@ public static unsafe partial class D3D12
         return result;
     }
 
-    public static Result D3D12GetDebugInterface<T>(out T? debugInterface) where T : ComObject
+    public static Result D3D12GetDebugInterface<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(out T? debugInterface) where T : ComObject
     {
         Result result = D3D12GetDebugInterface(typeof(T).GUID, out IntPtr nativePtr);
 
@@ -229,7 +258,11 @@ public static unsafe partial class D3D12
         return result;
     }
 
-    public static T D3D12GetDebugInterface<T>() where T : ComObject
+    public static T D3D12GetDebugInterface<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>() where T : ComObject
     {
         D3D12GetDebugInterface(typeof(T).GUID, out IntPtr nativePtr).CheckError();
         return MarshallingHelpers.FromPointer<T>(nativePtr);
@@ -252,7 +285,11 @@ public static unsafe partial class D3D12
         D3D12EnableExperimentalFeatures(features.Length, features, IntPtr.Zero, null);
     }
 
-    private static Result D3D12CreateVersionedRootSignatureDeserializer<T>(void* signatureData, PointerSize signatureDataLength, out T? rootSignatureDeserializer) where T : ID3D12VersionedRootSignatureDeserializer
+    private static Result D3D12CreateVersionedRootSignatureDeserializer<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(void* signatureData, PointerSize signatureDataLength, out T? rootSignatureDeserializer) where T : ID3D12VersionedRootSignatureDeserializer
     {
         Result result = D3D12CreateVersionedRootSignatureDeserializer(signatureData, signatureDataLength,
             typeof(T).GUID,
@@ -268,13 +305,21 @@ public static unsafe partial class D3D12
         return result;
     }
 
-    private static T D3D12CreateVersionedRootSignatureDeserializer<T>(void* signatureData, PointerSize signatureDataLength) where T : ID3D12VersionedRootSignatureDeserializer
+    private static T D3D12CreateVersionedRootSignatureDeserializer<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(void* signatureData, PointerSize signatureDataLength) where T : ID3D12VersionedRootSignatureDeserializer
     {
         D3D12CreateVersionedRootSignatureDeserializer(signatureData, signatureDataLength, typeof(T).GUID, out IntPtr nativePtr).CheckError();
         return MarshallingHelpers.FromPointer<T>(nativePtr);
     }
 
-    public static Result D3D12CreateVersionedRootSignatureDeserializer<T>(byte[] signatureData, out T? rootSignatureDeserializer) where T : ID3D12VersionedRootSignatureDeserializer
+    public static Result D3D12CreateVersionedRootSignatureDeserializer<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(byte[] signatureData, out T? rootSignatureDeserializer) where T : ID3D12VersionedRootSignatureDeserializer
     {
         fixed (byte* dataPtr = signatureData)
         {
@@ -282,12 +327,20 @@ public static unsafe partial class D3D12
         }
     }
 
-    public static Result D3D12CreateVersionedRootSignatureDeserializer<T>(Blob signatureData, out T? rootSignatureDeserializer) where T : ID3D12VersionedRootSignatureDeserializer
+    public static Result D3D12CreateVersionedRootSignatureDeserializer<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(Blob signatureData, out T? rootSignatureDeserializer) where T : ID3D12VersionedRootSignatureDeserializer
     {
         return D3D12CreateVersionedRootSignatureDeserializer(signatureData.BufferPointer.ToPointer(), signatureData.BufferSize, out rootSignatureDeserializer);
     }
 
-    public static T D3D12CreateVersionedRootSignatureDeserializer<T>(byte[] signatureData) where T : ID3D12VersionedRootSignatureDeserializer
+    public static T D3D12CreateVersionedRootSignatureDeserializer<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(byte[] signatureData) where T : ID3D12VersionedRootSignatureDeserializer
     {
         fixed (byte* dataPtr = signatureData)
         {
@@ -295,7 +348,11 @@ public static unsafe partial class D3D12
         }
     }
 
-    public static T D3D12CreateVersionedRootSignatureDeserializer<T>(Blob signatureData) where T : ID3D12VersionedRootSignatureDeserializer
+    public static T D3D12CreateVersionedRootSignatureDeserializer<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(Blob signatureData) where T : ID3D12VersionedRootSignatureDeserializer
     {
         return D3D12CreateVersionedRootSignatureDeserializer<T>(signatureData.BufferPointer.ToPointer(), signatureData.BufferSize);
     }

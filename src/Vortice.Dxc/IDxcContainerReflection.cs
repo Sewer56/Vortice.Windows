@@ -1,6 +1,7 @@
 // Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
 using SharpGen.Runtime;
 
 namespace Vortice.Dxc;
@@ -31,7 +32,11 @@ public partial class IDxcContainerReflection
         return result;
     }
 
-    public T? GetPartReflection<T>(int index) where T : ComObject
+    public T? GetPartReflection<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(int index) where T : ComObject
     {
         Result result = GetPartReflection(index, typeof(T).GUID, out IntPtr nativePtr);
         if (result.Failure)
@@ -42,7 +47,11 @@ public partial class IDxcContainerReflection
         return MarshallingHelpers.FromPointer<T>(nativePtr);
     }
 
-    public Result GetPartReflection<T>(int index, out T? @object) where T : ComObject
+    public Result GetPartReflection<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(int index, out T? @object) where T : ComObject
     {
         Result result = GetPartReflection(index, typeof(T).GUID, out IntPtr nativePtr);
         if (result.Failure)

@@ -1,6 +1,8 @@
 ﻿// Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Vortice.Direct3D12.Video;
 
 /// <summary>
@@ -43,13 +45,21 @@ public partial class ID3D12VideoDevice
         return result;
     }
 
-    public T CreateVideoDecoder<T>(VideoDecoderDescription description) where T : ID3D12VideoDecoder
+    public T CreateVideoDecoder<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(VideoDecoderDescription description) where T : ID3D12VideoDecoder
     {
         CreateVideoDecoder(ref description, typeof(T).GUID, out IntPtr nativePtr).CheckError();
         return MarshallingHelpers.FromPointer<T>(nativePtr);
     }
 
-    public Result CreateVideoDecoder<T>(VideoDecoderDescription description, out T? videoDecoder) where T : ID3D12VideoDecoder
+    public Result CreateVideoDecoder<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(VideoDecoderDescription description, out T? videoDecoder) where T : ID3D12VideoDecoder
     {
         Result result = CreateVideoDecoder(ref description, typeof(T).GUID, out IntPtr nativePtr);
         if (result.Failure)
@@ -83,13 +93,21 @@ public partial class ID3D12VideoDevice
         return result;
     }
 
-    public T CreateVideoDecoderHeap<T>(VideoDecoderHeapDescription description) where T : ID3D12VideoDecoderHeap
+    public T CreateVideoDecoderHeap<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(VideoDecoderHeapDescription description) where T : ID3D12VideoDecoderHeap
     {
         CreateVideoDecoderHeap(ref description, typeof(T).GUID, out IntPtr nativePtr).CheckError();
         return MarshallingHelpers.FromPointer<T>(nativePtr);
     }
 
-    public Result CreateVideoDecoderHeap<T>(VideoDecoderHeapDescription description, out T? videoDecoder) where T : ID3D12VideoDecoderHeap
+    public Result CreateVideoDecoderHeap<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(VideoDecoderHeapDescription description, out T? videoDecoder) where T : ID3D12VideoDecoderHeap
     {
         Result result = CreateVideoDecoderHeap(ref description, typeof(T).GUID, out IntPtr nativePtr);
         if (result.Failure)
@@ -116,7 +134,11 @@ public partial class ID3D12VideoDevice
         return new ID3D12VideoProcessor(nativePtr);
     }
 
-    public T CreateVideoProcessor<T>(
+    public T CreateVideoProcessor<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(
         int nodeMask,
         VideoProcessOutputStreamDescription outputStreamDescription,
         VideoProcessInputStreamDescription[] inputStreamDescriptions) where T : ID3D12VideoProcessor
@@ -125,7 +147,11 @@ public partial class ID3D12VideoDevice
         return MarshallingHelpers.FromPointer<T>(nativePtr);
     }
 
-    public T CreateVideoProcessor<T>(
+    public T CreateVideoProcessor<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(
         int nodeMask,
         VideoProcessOutputStreamDescription outputStreamDescription,
         int inputStreamDescriptionsCount,
@@ -135,7 +161,11 @@ public partial class ID3D12VideoDevice
         return MarshallingHelpers.FromPointer<T>(nativePtr);
     }
 
-    public Result CreateVideoProcessor<T>(
+    public Result CreateVideoProcessor<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(
         int nodeMask,
         VideoProcessOutputStreamDescription outputStreamDescription,
         VideoProcessInputStreamDescription[] inputStreamDescriptions,
@@ -152,7 +182,11 @@ public partial class ID3D12VideoDevice
         return result;
     }
 
-    public Result CreateVideoProcessor<T>(
+    public Result CreateVideoProcessor<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(
         int nodeMask,
         VideoProcessOutputStreamDescription outputStreamDescription,
         int inputStreamDescriptionsCount,

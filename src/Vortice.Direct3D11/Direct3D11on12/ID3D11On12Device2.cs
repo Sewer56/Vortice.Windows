@@ -1,19 +1,28 @@
 ﻿// Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
 using Vortice.Direct3D11;
 
 namespace Vortice.Direct3D11on12;
 
 public partial class ID3D11On12Device2
 {
-    public T UnwrapUnderlyingResource<T>(ID3D11Resource resource, ComObject commandQueue) where T : ComObject
+    public T UnwrapUnderlyingResource<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(ID3D11Resource resource, ComObject commandQueue) where T : ComObject
     {
         UnwrapUnderlyingResource(resource, commandQueue, typeof(T).GUID, out IntPtr nativePtr).CheckError();
         return MarshallingHelpers.FromPointer<T>(nativePtr);
     }
 
-    public Result UnwrapUnderlyingResource<T>(ID3D11Resource resource, ComObject commandQueue, out T? resource12) where T : ComObject
+    public Result UnwrapUnderlyingResource<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(ID3D11Resource resource, ComObject commandQueue, out T? resource12) where T : ComObject
     {
         Result result = UnwrapUnderlyingResource(resource, commandQueue, typeof(T).GUID, out IntPtr nativePtr);
         if (result.Success)

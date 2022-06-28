@@ -1,6 +1,7 @@
 ﻿// Copyright © Aaron Sun, Amer Koleci, and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
 using Vortice.Direct3D12;
 
 namespace Vortice.DirectML;
@@ -117,14 +118,22 @@ public static partial class DML
         return new(nativePtr);
     }
 
-    public static T DMLCreateDevice<T>(ID3D12Device d3d12Device, CreateDeviceFlags createDeviceFlags)
+    public static T DMLCreateDevice<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(ID3D12Device d3d12Device, CreateDeviceFlags createDeviceFlags)
         where T : IDMLDevice
     {
         DMLCreateDevice(d3d12Device, createDeviceFlags, typeof(T).GUID, out IntPtr nativePtr).CheckError();
         return MarshallingHelpers.FromPointer<T>(nativePtr) ?? throw new NullReferenceException();
     }
 
-    public static Result DMLCreateDevice<T>(ID3D12Device d3d12Device, CreateDeviceFlags createDeviceFlags, out T? device)
+    public static Result DMLCreateDevice<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(ID3D12Device d3d12Device, CreateDeviceFlags createDeviceFlags, out T? device)
         where T : IDMLDevice
     {
         Result result = DMLCreateDevice(
@@ -143,7 +152,11 @@ public static partial class DML
         return result;
     }
 
-    public static T DMLCreateDevice<T>(ID3D12Device d3d12Device, CreateDeviceFlags createDeviceFlags, FeatureLevel minimumFeatureLevel)
+    public static T DMLCreateDevice<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(ID3D12Device d3d12Device, CreateDeviceFlags createDeviceFlags, FeatureLevel minimumFeatureLevel)
         where T : IDMLDevice
     {
         DMLCreateDevice1(
@@ -156,7 +169,11 @@ public static partial class DML
         return MarshallingHelpers.FromPointer<T>(nativePtr) ?? throw new NullReferenceException();
     }
 
-    public static Result DMLCreateDevice<T>(ID3D12Device d3d12Device, CreateDeviceFlags createDeviceFlags, FeatureLevel minimumFeatureLevel, out T? device)
+    public static Result DMLCreateDevice<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(ID3D12Device d3d12Device, CreateDeviceFlags createDeviceFlags, FeatureLevel minimumFeatureLevel, out T? device)
         where T : IDMLDevice
     {
         Result result = DMLCreateDevice1(

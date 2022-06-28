@@ -50,7 +50,7 @@ public partial class ID2D1Factory1
     /// <typeparam name="T"></typeparam>
     /// <param name="effectFactory"></param>
     public void RegisterEffect<
-#if NET5_0_OR_GREATER
+#if NET6_0_OR_GREATER
         [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties)]
 #endif
     T>(Func<T> effectFactory) where T : CustomEffectBase
@@ -66,7 +66,7 @@ public partial class ID2D1Factory1
     /// <param name="effectFactory"></param>
     /// <param name="effectId"></param>
     public void RegisterEffect<
-#if NET5_0_OR_GREATER
+#if NET6_0_OR_GREATER
         [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties)]
 #endif
     T>(Func<T> effectFactory, Guid effectId) where T : CustomEffectBase
@@ -88,7 +88,7 @@ public partial class ID2D1Factory1
     /// </summary>
     /// <typeparam name="T">Type of </typeparam>
     public void RegisterEffect<
-#if NET5_0_OR_GREATER
+#if NET6_0_OR_GREATER
         [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties)]
 #endif
     T>() where T : CustomEffectBase, new()
@@ -102,7 +102,7 @@ public partial class ID2D1Factory1
     /// <typeparam name="T">Type of </typeparam>
     /// <param name="effectId"></param>
     public void RegisterEffect<
-#if NET5_0_OR_GREATER
+#if NET6_0_OR_GREATER
         [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties)]
 #endif
     T>(Guid effectId) where T : CustomEffectBase, new()

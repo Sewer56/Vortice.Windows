@@ -1,6 +1,7 @@
 // Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 namespace Vortice.Dxc;
@@ -186,7 +187,11 @@ public static partial class Dxc
 #endif
 
     [MethodImpl(MethodImplOptions.NoInlining)]
-    public static T CreateDxcCompiler<T>() where T : ComObject
+    public static T CreateDxcCompiler<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>() where T : ComObject
     {
         return DxcCreateInstance<T>(CLSID_DxcCompiler);
     }
@@ -227,13 +232,21 @@ public static partial class Dxc
         }
     }
 
-    public static T DxcCreateInstance<T>(Guid classGuid) where T : ComObject
+    public static T DxcCreateInstance<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+        T>(Guid classGuid) where T : ComObject
     {
         DxcCreateInstance(classGuid, typeof(T).GUID, out IntPtr nativePtr).CheckError();
         return MarshallingHelpers.FromPointer<T>(nativePtr)!;
     }
 
-    public static Result DxcCreateInstance<T>(Guid classGuid, out T? instance) where T : ComObject
+    public static Result DxcCreateInstance<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(Guid classGuid, out T? instance) where T : ComObject
     {
         Result result = DxcCreateInstance(classGuid, typeof(T).GUID, out IntPtr nativePtr);
         if (result.Success)

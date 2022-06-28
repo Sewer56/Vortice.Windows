@@ -1,6 +1,7 @@
 // Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
 using SharpGen.Runtime;
 
 namespace Vortice.Dxc;
@@ -54,13 +55,21 @@ public partial class IDxcResult
     }
 
 
-    public T GetOutput<T>(DxcOutKind kind) where T : ComObject
+    public T GetOutput<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(DxcOutKind kind) where T : ComObject
     {
         GetOutput(kind, typeof(T).GUID, out IntPtr nativePtr, IntPtr.Zero).CheckError();
         return MarshallingHelpers.FromPointer<T>(nativePtr)!;
     }
 
-    public unsafe T GetOutput<T>(DxcOutKind kind, out IDxcBlobUtf16? outputName) where T : ComObject
+    public unsafe T GetOutput<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(DxcOutKind kind, out IDxcBlobUtf16? outputName) where T : ComObject
     {
         IntPtr outputNamePtr = IntPtr.Zero;
         GetOutput(kind, typeof(T).GUID, out IntPtr nativePtr, new IntPtr(&outputNamePtr)).CheckError();
@@ -69,7 +78,11 @@ public partial class IDxcResult
         return MarshallingHelpers.FromPointer<T>(nativePtr)!;
     }
 
-    public Result GetOutput<T>(DxcOutKind kind, out T? @object) where T : ComObject
+    public Result GetOutput<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(DxcOutKind kind, out T? @object) where T : ComObject
     {
         Result result = GetOutput(kind, typeof(T).GUID, out IntPtr nativePtr, IntPtr.Zero);
         if (result.Failure)
@@ -82,7 +95,11 @@ public partial class IDxcResult
         return result;
     }
 
-    public unsafe Result GetOutput<T>(DxcOutKind kind, out T? @object, out IDxcBlobUtf16? outputName) where T : ComObject
+    public unsafe Result GetOutput<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(DxcOutKind kind, out T? @object, out IDxcBlobUtf16? outputName) where T : ComObject
     {
         IntPtr outputNamePtr = IntPtr.Zero;
         Result result = GetOutput(kind, typeof(T).GUID, out IntPtr nativePtr, new IntPtr(&outputNamePtr));

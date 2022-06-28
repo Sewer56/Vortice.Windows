@@ -1,6 +1,8 @@
 // Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Vortice.DXCore;
 
 public static partial class DXCore
@@ -25,7 +27,11 @@ public static partial class DXCore
     /// </summary>
     /// <param name="factory">The <see cref="IDXCoreAdapterFactory"/> being created.</param>
     /// <returns>Return the <see cref="Result"/>.</returns>
-    public static Result DXCoreCreateAdapterFactory<T>(out T? factory) where T : IDXCoreAdapterFactory
+    public static Result DXCoreCreateAdapterFactory<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(out T? factory) where T : IDXCoreAdapterFactory
     {
         Result result = DXCoreCreateAdapterFactory(typeof(T).GUID, out IntPtr nativePtr);
         if (result.Success)
@@ -42,7 +48,11 @@ public static partial class DXCore
     /// Try to create new instance of <see cref="IDXCoreAdapterFactory"/>.
     /// </summary>
     /// <returns>Return an instance of <see cref="IDXCoreAdapterFactory"/> or null if failed.</returns>
-    public static T DXCoreCreateAdapterFactory<T>() where T : IDXCoreAdapterFactory
+    public static T DXCoreCreateAdapterFactory<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>() where T : IDXCoreAdapterFactory
     {
         DXCoreCreateAdapterFactory(typeof(T).GUID, out IntPtr nativePtr).CheckError();
         return MarshallingHelpers.FromPointer<T>(nativePtr);

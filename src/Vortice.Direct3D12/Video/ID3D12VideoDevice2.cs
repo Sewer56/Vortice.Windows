@@ -1,6 +1,8 @@
 ﻿// Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Vortice.Direct3D12.Video;
 
 /// <summary>
@@ -16,13 +18,21 @@ public partial class ID3D12VideoDevice2
         return new ID3D12VideoDecoder1(nativePtr);
     }
 
-    public T CreateVideoDecoder1<T>(VideoDecoderDescription description, ID3D12ProtectedResourceSession protectedResourceSession) where T : ID3D12VideoDecoder1
+    public T CreateVideoDecoder1<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(VideoDecoderDescription description, ID3D12ProtectedResourceSession protectedResourceSession) where T : ID3D12VideoDecoder1
     {
         CreateVideoDecoder1(ref description, protectedResourceSession, typeof(T).GUID, out IntPtr nativePtr).CheckError();
         return MarshallingHelpers.FromPointer<T>(nativePtr);
     }
 
-    public Result CreateVideoDecoder1<T>(VideoDecoderDescription description, ID3D12ProtectedResourceSession protectedResourceSession, out T? videoDecoder) where T : ID3D12VideoDecoder1
+    public Result CreateVideoDecoder1<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(VideoDecoderDescription description, ID3D12ProtectedResourceSession protectedResourceSession, out T? videoDecoder) where T : ID3D12VideoDecoder1
     {
         Result result = CreateVideoDecoder1(ref description, protectedResourceSession, typeof(T).GUID, out IntPtr nativePtr);
         if (result.Failure)
@@ -43,13 +53,21 @@ public partial class ID3D12VideoDevice2
         return new ID3D12VideoDecoderHeap1(nativePtr);
     }
 
-    public T CreateVideoDecoderHeap1<T>(VideoDecoderHeapDescription description, ID3D12ProtectedResourceSession protectedResourceSession) where T : ID3D12VideoDecoderHeap1
+    public T CreateVideoDecoderHeap1<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(VideoDecoderHeapDescription description, ID3D12ProtectedResourceSession protectedResourceSession) where T : ID3D12VideoDecoderHeap1
     {
         CreateVideoDecoderHeap1(ref description, protectedResourceSession, typeof(T).GUID, out IntPtr nativePtr).CheckError();
         return MarshallingHelpers.FromPointer<T>(nativePtr);
     }
 
-    public Result CreateVideoDecoderHeap1<T>(VideoDecoderHeapDescription description, ID3D12ProtectedResourceSession protectedResourceSession, out T? videoDecoder) where T : ID3D12VideoDecoderHeap1
+    public Result CreateVideoDecoderHeap1<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(VideoDecoderHeapDescription description, ID3D12ProtectedResourceSession protectedResourceSession, out T? videoDecoder) where T : ID3D12VideoDecoderHeap1
     {
         Result result = CreateVideoDecoderHeap1(ref description, protectedResourceSession, typeof(T).GUID, out IntPtr nativePtr);
         if (result.Failure)
@@ -70,13 +88,21 @@ public partial class ID3D12VideoDevice2
         return new ID3D12VideoExtensionCommand(nativePtr);
     }
 
-    public T CreateVideoExtensionCommand<T>(VideoExtensionCommandDescription description, IntPtr creationParameters, PointerSize creationParametersDataSizeInBytes, ID3D12ProtectedResourceSession protectedResourceSession) where T : ID3D12VideoExtensionCommand
+    public T CreateVideoExtensionCommand<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(VideoExtensionCommandDescription description, IntPtr creationParameters, PointerSize creationParametersDataSizeInBytes, ID3D12ProtectedResourceSession protectedResourceSession) where T : ID3D12VideoExtensionCommand
     {
         CreateVideoExtensionCommand(ref description, creationParameters, creationParametersDataSizeInBytes, protectedResourceSession, typeof(T).GUID, out IntPtr nativePtr).CheckError();
         return MarshallingHelpers.FromPointer<T>(nativePtr);
     }
 
-    public Result CreateVideoExtensionCommand<T>(
+    public Result CreateVideoExtensionCommand<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(
         VideoExtensionCommandDescription description,
         IntPtr creationParameters,
         PointerSize creationParametersDataSizeInBytes,
@@ -132,7 +158,11 @@ public partial class ID3D12VideoDevice2
         return new ID3D12VideoProcessor(nativePtr);
     }
 
-    public T CreateVideoProcessor1<T>(
+    public T CreateVideoProcessor1<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(
         int nodeMask,
         VideoProcessOutputStreamDescription outputStreamDescription,
         VideoProcessInputStreamDescription[] inputStreamDescriptions,
@@ -150,7 +180,11 @@ public partial class ID3D12VideoDevice2
         return MarshallingHelpers.FromPointer<T>(nativePtr);
     }
 
-    public T CreateVideoProcessor1<T>(
+    public T CreateVideoProcessor1<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(
         int nodeMask,
         VideoProcessOutputStreamDescription outputStreamDescription,
         int inputStreamDescriptionsCount,
@@ -168,7 +202,11 @@ public partial class ID3D12VideoDevice2
         return MarshallingHelpers.FromPointer<T>(nativePtr);
     }
 
-    public Result CreateVideoProcessor1<T>(
+    public Result CreateVideoProcessor1<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(
         int nodeMask,
         VideoProcessOutputStreamDescription outputStreamDescription,
         VideoProcessInputStreamDescription[] inputStreamDescriptions,
@@ -192,7 +230,11 @@ public partial class ID3D12VideoDevice2
         return result;
     }
 
-    public Result CreateVideoProcessor1<T>(
+    public Result CreateVideoProcessor1<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(
         int nodeMask,
         VideoProcessOutputStreamDescription outputStreamDescription,
         int inputStreamDescriptionsCount,

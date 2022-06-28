@@ -1,6 +1,8 @@
 ﻿// Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Vortice.Direct3D12;
 
 public partial class ID3D12Device3
@@ -20,13 +22,21 @@ public partial class ID3D12Device3
     /// <typeparam name="T"></typeparam>
     /// <param name="address">The address used to create the heap.</param>
     /// <returns></returns>
-    public T OpenExistingHeapFromAddress<T>(IntPtr address) where T : ID3D12Heap
+    public T OpenExistingHeapFromAddress<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(IntPtr address) where T : ID3D12Heap
     {
         OpenExistingHeapFromAddress(address, typeof(T).GUID, out IntPtr nativePtr).CheckError();
         return MarshallingHelpers.FromPointer<T>(nativePtr);
     }
 
-    public Result OpenExistingHeapFromAddress<T>(IntPtr address, out T? heap) where T : ID3D12Heap
+    public Result OpenExistingHeapFromAddress<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(IntPtr address, out T? heap) where T : ID3D12Heap
     {
         Result result = OpenExistingHeapFromAddress(address, typeof(T).GUID, out IntPtr nativePtr);
         if (result.Failure)
@@ -39,13 +49,21 @@ public partial class ID3D12Device3
         return result;
     }
 
-    public T OpenExistingHeapFromFileMapping<T>(IntPtr fileMapping) where T : ID3D12Heap
+    public T OpenExistingHeapFromFileMapping<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(IntPtr fileMapping) where T : ID3D12Heap
     {
         OpenExistingHeapFromFileMapping(fileMapping, typeof(T).GUID, out IntPtr nativePtr).CheckError();
         return MarshallingHelpers.FromPointer<T>(nativePtr);
     }
 
-    public Result OpenExistingHeapFromFileMapping<T>(IntPtr fileMapping, out T? heap) where T : ID3D12Heap
+    public Result OpenExistingHeapFromFileMapping<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(IntPtr fileMapping, out T? heap) where T : ID3D12Heap
     {
         Result result = OpenExistingHeapFromFileMapping(fileMapping, typeof(T).GUID, out IntPtr nativePtr);
         if (result.Failure)

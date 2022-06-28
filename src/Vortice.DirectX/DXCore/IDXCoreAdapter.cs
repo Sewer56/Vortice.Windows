@@ -1,6 +1,8 @@
 // Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Vortice.DXCore;
 
 public unsafe partial class IDXCoreAdapter
@@ -30,13 +32,21 @@ public unsafe partial class IDXCoreAdapter
         }
     }
 
-    public T GetFactory<T>() where T : IDXCoreAdapterFactory
+    public T GetFactory<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>() where T : IDXCoreAdapterFactory
     {
         GetFactory(typeof(T).GUID, out IntPtr factoryPtr).CheckError();
         return MarshallingHelpers.FromPointer<T>(factoryPtr);
     }
 
-    public Result GetFactory<T>(out T? factory) where T : IDXCoreAdapterFactory
+    public Result GetFactory<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(out T? factory) where T : IDXCoreAdapterFactory
     {
         Result result = GetFactory(typeof(T).GUID, out IntPtr factoryPtr);
         if (result.Failure)

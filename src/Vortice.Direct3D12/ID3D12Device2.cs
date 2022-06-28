@@ -1,6 +1,8 @@
 ﻿// Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Vortice.Direct3D12;
 
 public unsafe partial class ID3D12Device2
@@ -18,7 +20,11 @@ public unsafe partial class ID3D12Device2
         return new ID3D12PipelineState(nativePtr);
     }
 
-    public T CreatePipelineState<T, TData>(TData data)
+    public T CreatePipelineState<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T, TData>(TData data)
         where T : ID3D12PipelineState
         where TData : unmanaged
     {
@@ -31,13 +37,21 @@ public unsafe partial class ID3D12Device2
         return CreatePipelineState<T>(description);
     }
 
-    public T CreatePipelineState<T>(PipelineStateStreamDescription description) where T : ID3D12PipelineState
+    public T CreatePipelineState<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(PipelineStateStreamDescription description) where T : ID3D12PipelineState
     {
         CreatePipelineState(ref description, typeof(T).GUID, out IntPtr nativePtr).CheckError();
         return MarshallingHelpers.FromPointer<T>(nativePtr);
     }
 
-    public Result CreatePipelineState<T>(PipelineStateStreamDescription description, out T? pipelineState) where T : ID3D12PipelineState
+    public Result CreatePipelineState<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(PipelineStateStreamDescription description, out T? pipelineState) where T : ID3D12PipelineState
     {
         Result result = CreatePipelineState(ref description, typeof(T).GUID, out IntPtr nativePtr);
         if (result.Failure)

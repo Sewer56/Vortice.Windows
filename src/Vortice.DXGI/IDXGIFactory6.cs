@@ -1,11 +1,17 @@
 // Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Vortice.DXGI;
 
 public partial class IDXGIFactory6
 {
-    public Result EnumAdapterByGpuPreference<T>(int index, GpuPreference gpuPreference, out T? adapter) where T : IDXGIAdapter
+    public Result EnumAdapterByGpuPreference<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(int index, GpuPreference gpuPreference, out T? adapter) where T : IDXGIAdapter
     {
         Result result = EnumAdapterByGpuPreference(index, gpuPreference, typeof(T).GUID, out IntPtr adapterPtr);
         if (result.Success)
@@ -18,7 +24,11 @@ public partial class IDXGIFactory6
         return result;
     }
 
-    public T EnumAdapterByGpuPreference<T>(int index, GpuPreference gpuPreference) where T : IDXGIAdapter
+    public T EnumAdapterByGpuPreference<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(int index, GpuPreference gpuPreference) where T : IDXGIAdapter
     {
         EnumAdapterByGpuPreference(index, gpuPreference, typeof(T).GUID, out IntPtr adapterPtr).CheckError();
         return MarshallingHelpers.FromPointer<T>(adapterPtr);

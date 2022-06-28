@@ -1,6 +1,7 @@
 ﻿// Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using SharpGen.Runtime;
@@ -233,7 +234,11 @@ public unsafe partial class IMFAttributes
     /// </summary>	
     /// <param name="guidKey">GUID of the key.</param>	
     /// <returns>The value associated to this key.</returns>	
-    public unsafe T Get<T>(Guid guidKey)
+    public unsafe T Get<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(Guid guidKey)
     {
         // Perform conversions to supported types
         // int
@@ -342,7 +347,11 @@ public unsafe partial class IMFAttributes
     /// <msdn-id>ms704598</msdn-id>	
     /// <unmanaged>HRESULT IMFAttributes::GetItem([In] const GUID&amp; guidKey,[In] void* pValue)</unmanaged>	
     /// <unmanaged-short>IMFAttributes::GetItem</unmanaged-short>	
-    public T Get<T>(MediaAttributeKey<T> guidKey)
+    public T Get<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(MediaAttributeKey<T> guidKey)
     {
         return Get<T>(guidKey.Guid);
     }

@@ -1,6 +1,7 @@
 // Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 namespace Vortice.Dxc;
@@ -15,7 +16,11 @@ public static partial class Dxil
     }
 
 
-    public static Result DxilCreateInstance<T>(Guid classGuid, out T? instance) where T : ComObject
+    public static Result DxilCreateInstance<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(Guid classGuid, out T? instance) where T : ComObject
     {
         Result result = DxcCreateInstance(classGuid, typeof(T).GUID, out IntPtr nativePtr);
         if (result.Success)

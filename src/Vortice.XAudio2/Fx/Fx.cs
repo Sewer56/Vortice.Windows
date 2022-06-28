@@ -1,6 +1,8 @@
 // Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Vortice.XAudio2.Fx;
 
 public static partial class Fx
@@ -84,7 +86,11 @@ public static partial class Fx
         return result;
     }
 
-    public static Result CreateAudioVolumeMeter<T>(out T? volumeMeter) where T : ComObject
+    public static Result CreateAudioVolumeMeter<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+        T>(out T? volumeMeter) where T : ComObject
     {
         unsafe
         {
@@ -101,7 +107,11 @@ public static partial class Fx
         }
     }
 
-    public static T CreateAudioVolumeMeter<T>() where T : ComObject
+    public static T CreateAudioVolumeMeter<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>() where T : ComObject
     {
         unsafe
         {
@@ -111,7 +121,11 @@ public static partial class Fx
         }
     }
 
-    public static Result CreateAudioReverb<T>(out T? reverb) where T : ComObject
+    public static Result CreateAudioReverb<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(out T? reverb) where T : ComObject
     {
         unsafe
         {
@@ -128,7 +142,11 @@ public static partial class Fx
         }
     }
 
-    public static T CreateAudioReverb<T>() where T : ComObject
+    public static T CreateAudioReverb<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>() where T : ComObject
     {
         unsafe
         {

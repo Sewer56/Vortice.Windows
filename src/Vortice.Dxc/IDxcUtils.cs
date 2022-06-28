@@ -2,6 +2,7 @@
 // Distributed under the MIT license. See the LICENSE file in the project root for more information.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using SharpGen.Runtime;
 
@@ -15,7 +16,11 @@ namespace Vortice.Dxc
             return handler;
         }
 
-        public Result CreateReflection<T>(IDxcBlob blob, out T? reflection) where T : ComObject
+        public Result CreateReflection<
+#if NET6_0_OR_GREATER
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+        T>(IDxcBlob blob, out T? reflection) where T : ComObject
         {
             DxcBuffer reflectionData = new DxcBuffer
             {
@@ -35,7 +40,11 @@ namespace Vortice.Dxc
             return result;
         }
 
-        public T CreateReflection<T>(IDxcBlob blob) where T : ComObject
+        public T CreateReflection<
+#if NET6_0_OR_GREATER
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+        T>(IDxcBlob blob) where T : ComObject
         {
             DxcBuffer reflectionData = new DxcBuffer
             {

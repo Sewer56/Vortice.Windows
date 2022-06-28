@@ -1,6 +1,8 @@
 // Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Vortice.DXGI;
 
 public partial class IDXGISwapChain
@@ -20,7 +22,11 @@ public partial class IDXGISwapChain
         return output;
     }
 
-    public Result GetContainingOutput<T>(out T? output) where T : IDXGIOutput
+    public Result GetContainingOutput<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(out T? output) where T : IDXGIOutput
     {
         Result result = GetContainingOutput(out IDXGIOutput outputTemp);
         if (result.Failure)
@@ -34,13 +40,21 @@ public partial class IDXGISwapChain
         return result;
     }
 
-    public T GetBuffer<T>(int index) where T : ComObject
+    public T GetBuffer<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(int index) where T : ComObject
     {
         GetBuffer(index, typeof(T).GUID, out IntPtr nativePtr).CheckError();
         return MarshallingHelpers.FromPointer<T>(nativePtr);
     }
 
-    public Result GetBuffer<T>(int index, out T? surface) where T : ComObject
+    public Result GetBuffer<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(int index, out T? surface) where T : ComObject
     {
         Result result = GetBuffer(index, typeof(T).GUID, out IntPtr nativePtr);
         if (result.Failure)

@@ -1,6 +1,7 @@
 // Copyright © Amer Koleci and Contributors.
 // Licensed under the MIT License (MIT). See LICENSE in the repository root for more information.
 
+using System.Diagnostics.CodeAnalysis;
 using Vortice.Mathematics;
 using Vortice.Direct3D;
 using Vortice.DXGI;
@@ -613,7 +614,11 @@ public unsafe partial class ID3D11Device
     /// <typeparam name="T">Type of <see cref="ID3D11Resource"/> </typeparam>
     /// <param name="handle">A handle to the resource to open.</param>
     /// <returns>Instance of <see cref="ID3D11Resource"/>.</returns>
-    public T OpenSharedResource<T>(IntPtr handle) where T : ID3D11Resource
+    public T OpenSharedResource<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+        T>(IntPtr handle) where T : ID3D11Resource
     {
         OpenSharedResource(handle, typeof(T).GUID, out IntPtr nativePtr).CheckError();
         return MarshallingHelpers.FromPointer<T>(nativePtr);
@@ -626,7 +631,11 @@ public unsafe partial class ID3D11Device
     /// <param name="handle">A handle to the resource to open.</param>
     /// <param name="resource">Instance of <see cref="ID3D11Resource"/>.</param>
     /// <returns>The operation result.</returns>
-    public Result OpenSharedResource<T>(IntPtr handle, out T? resource) where T : ID3D11Resource
+    public Result OpenSharedResource<
+#if NET6_0_OR_GREATER
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+#endif
+    T>(IntPtr handle, out T? resource) where T : ID3D11Resource
     {
         Result result = OpenSharedResource(handle, typeof(T).GUID, out IntPtr nativePtr);
         if (result.Success)
